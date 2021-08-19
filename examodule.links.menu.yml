@@ -1,0 +1,4 @@
+examodule.menu_link:
+  title: 'Exam module'
+  route_name: examodule.controller
+  menu_name: main

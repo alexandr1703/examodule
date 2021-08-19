@@ -1,0 +1,6 @@
+examodule.controller:
+  path: '/alexandr/examodule'
+  defaults:
+    _form: '\Drupal\examodule\Form\ExamForm'
+  requirements:
+    _permission: 'access content'

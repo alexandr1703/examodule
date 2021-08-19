@@ -1,0 +1,11 @@
+.td {
+  width: 100%;
+}
+.form-item {
+  width: 5%;
+  display: table-cell;
+}
+.module-table thead th {
+  width: 5%;
+}
+
