@@ -39,11 +39,13 @@ class ExamForm extends FormBase {
     $ii = '';
 //    $inputes['_triggering_element_name'] = [];
 //    $hh = $inputes['_triggering_element_name'];
+    $triggered = $form_state->getTriggeringElement();
+    $triggered_name = $triggered['#name'] ?? 'empty';
 
-//  if ($form_state->getUserInput()['_triggering_element_value'] === 'Submit') {
-//    $this->count($form, $form_state);
-////    $gg = $form_state->getUserInput()[0][0]['Mar'] + 2;
-//  }
+  if ($form_state->getUserInput()['_triggering_element_name'] === 'add-table') {
+    $this->count($form, $form_state);
+//    $gg = $form_state->getUserInput()[0][0]['Mar'] + 2;
+  }
     if (empty($numYear)){
       $numYear = 1;
       $form_state->set('numYear', $numYear);
@@ -226,9 +228,9 @@ class ExamForm extends FormBase {
       '#type' => 'submit',
       '#name' => 'submit',
       '#value' => $this->t('Submit'),
-      '#submit' => [
-        '::count',
-      ],
+//      '#submit' => [
+//        '::count',
+//      ],
       '#ajax' => [
         'callback' => '::ajaxCallbackRow',
         'wrapper' => 'wrapper',
