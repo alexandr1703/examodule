@@ -30,22 +30,9 @@ class ExamForm extends FormBase {
     'YTD'
   ];
 
-  protected $q1;
-
 
   public function buildForm(array $form, FormStateInterface $form_state){
-    $inputes = $form_state->getUserInput();
     $numYear = $form_state->get('numYear');
-    $ii = '';
-//    $inputes['_triggering_element_name'] = [];
-//    $hh = $inputes['_triggering_element_name'];
-    $triggered = $form_state->getTriggeringElement();
-    $triggered_name = $triggered['#name'] ?? 'empty';
-
-  if ($form_state->getUserInput()['_triggering_element_name'] === 'add-table') {
-    $this->count($form, $form_state);
-//    $gg = $form_state->getUserInput()[0][0]['Mar'] + 2;
-  }
     if (empty($numYear)){
       $numYear = 1;
       $form_state->set('numYear', $numYear);
@@ -55,12 +42,12 @@ class ExamForm extends FormBase {
       $numTable = 1;
       $form_state->set('numTable', $numTable);
     }
-
     $form['wrapper']['title'] = [
     '#type' => 'html_tag',
     '#tag' => 'h2',
     '#value' => 'Calendar',
     ];
+    $form['#tree'] = TRUE;
     $form['wrapper'] = [
       '#type' => 'container',
       '#attributes' => [
@@ -216,7 +203,8 @@ class ExamForm extends FormBase {
       '#name' => 'add-table',
       '#value' => $this->t('Add Table'),
       '#submit' => [
-        '::addTable',
+//        '::addTable',
+        '::validateForm',
       ],
       '#ajax' => [
         'callback' => '::ajaxCallbackRow',
@@ -228,17 +216,10 @@ class ExamForm extends FormBase {
       '#type' => 'submit',
       '#name' => 'submit',
       '#value' => $this->t('Submit'),
-//      '#submit' => [
-//        '::count',
-//      ],
       '#ajax' => [
         'callback' => '::ajaxCallbackRow',
         'wrapper' => 'wrapper',
       ],
-//      '#ajax' => [
-//        'callback' => '::ajaxCallbackTable',
-//        'wrapper' => 'wrapper',
-//      ],
     ];
       $form['#attached']['library'][] = 'examodule/exam';
     return $form;
@@ -277,19 +258,47 @@ class ExamForm extends FormBase {
   function count(array &$form, FormStateInterface $form_state){
     $numYear = $form_state->get('numYear');
     $numTable = $form_state->get('numTable');
-    for ($j = 0; $j < $numTable; $j++){
-      for ($i=0; $i < $numYear; $i++){
-        $this->q1 = $form_state->getValues()[0][0]['Jan'] + $form_state->getValues()[0][0]['Feb'] + $form_state->getValues()[0][0]['Mar'];
-        $form_state->setValue([$j,$i,'Q1'], $this->q1);
+    $value = $form_state->getValues()['wrapper']['table'];
+    for ($j = 0; $j < $numTable; $j++) {
+      for ($i = 0; $i < $numYear; $i++) {
+        $q1 = round(((($value[$j][$i]['Jan'] + $value[$j][$i]['Feb'] +
+              $value[$j][$i]['Mar']) + 1) / 3), 2);
+        $form['wrapper']['table'][$j][$i]['Q1']['#value'] = $q1;
+        $q2 = round(((($value[$j][$i]['Apr'] + $value[$j][$i]['May'] +
+              $value[$j][$i]['Jun']) + 1) / 3), 2);
+        $form['wrapper']['table'][$j][$i]['Q2']['#value'] = $q2;
+        $q3 = round(((($value[$j][$i]['Jul'] + $value[$j][$i]['Aug'] +
+              $value[$j][$i]['Sep']) + 1) / 3), 2);
+        $form['wrapper']['table'][$j][$i]['Q3']['#value'] = $q3;
+        $q4 = round(((($value[$j][$i]['Oct'] + $value[$j][$i]['Now'] +
+              $value[$j][$i]['Dec']) + 1) / 3), 2);
+        $form['wrapper']['table'][$j][$i]['Q4']['#value'] = $q4;
+        $form['wrapper']['table'][$j][$i]['YTD']['#value'] =
+          round(((($q1 + $q2 + $q3 + $q4) + 1) / 4), 2);
       }
     }
     return $form;
   }
 
   public function validateForm(array &$form, FormStateInterface $form_state){
-
+    $numYear = $form_state->get('numYear');
+    $numTable = $form_state->get('numTable');
+    $values = $form_state->getValues()['wrapper']['table'];
+    for ($j = 0; $j <= $numTable; $j++) {
+      for ($i = 0; $i < $numYear; $i++) {
+        foreach ($values as $value) {
+          $g = $value;
+          foreach ($value as $inputVal) {
+            $h = $inputVal;
+            $jan = $inputVal['Jan'];
+          }
+        }
+      }
+    }
   }
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
+   $this->count($form, $form_state);
+    return $form;
   }
 }
