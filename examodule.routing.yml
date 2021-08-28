@@ -2,5 +2,6 @@ examodule.controller:
   path: '/alexandr/examodule'
   defaults:
     _form: '\Drupal\examodule\Form\ExamForm'
+    _title: 'Attestation module'
   requirements:
     _permission: 'access content'

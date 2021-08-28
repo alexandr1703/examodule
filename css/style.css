@@ -1,11 +1,14 @@
-.td {
-  width: 100%;
-}
-.form-item {
-  width: 5%;
-  display: table-cell;
-}
-.module-table thead th {
+table tbody tr td{
+  padding: 0;
   width: 5%;
 }
 
+table td input,
+table td .form-item{
+  width: 100%;
+  height: auto;
+}
+
+table td span.result {
+  text-align: center;
+}
