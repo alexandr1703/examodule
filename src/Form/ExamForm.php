@@ -126,7 +126,7 @@ class ExamForm extends FormBase {
           '#type' => 'number',
         ];
         $form['wrapper']['table'][$j][$i]['Q1'] = [
-          '#type' => 'number',
+          '#type' => 'textfield',
           '#attributes' => [
             'readonly' => ['readonly'],
           ],
@@ -141,7 +141,7 @@ class ExamForm extends FormBase {
           '#type' => 'number',
         ];
         $form['wrapper']['table'][$j][$i]['Q2'] = [
-          '#type' => 'number',
+          '#type' => 'textfield',
           '#attributes' => [
             'readonly' => ['readonly'],
           ],
@@ -156,7 +156,7 @@ class ExamForm extends FormBase {
           '#type' => 'number',
         ];
         $form['wrapper']['table'][$j][$i]['Q3'] = [
-          '#type' => 'number',
+          '#type' => 'textfield',
           '#attributes' => [
             'readonly' => ['readonly'],
           ],
@@ -171,13 +171,13 @@ class ExamForm extends FormBase {
           '#type' => 'number',
         ];
         $form['wrapper']['table'][$j][$i]['Q4'] = [
-          '#type' => 'number',
+          '#type' => 'textfield',
           '#attributes' => [
             'readonly' => ['readonly'],
           ],
         ];
         $form['wrapper']['table'][$j][$i]['YTD'] = [
-          '#type' => 'number',
+          '#type' => 'textfield',
           '#attributes' => [
             'readonly' => ['readonly'],
           ],
